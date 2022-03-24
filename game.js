@@ -31,17 +31,14 @@ class Game {
     }
 
     static fillWithNewBalls(square) {
-        const a25 = this.array25();
-        a25.forEach((n, i) => {
+        this.array25().forEach((n, i) => {
             const ball = document.createElement('div');
-            ball.style.top = this.numberToPlace(i, 0)[0]
+            ball.style.top = this.numberToPlace(i, 0)[0];
             ball.style.left = this.numberToPlace(i, 0)[1];
-            const ballId = n;
-            const number = document.createTextNode(ballId);
             ball.style.background = '#' + Math.floor(Math.random() * 16777215).toString(16);
-            ball.appendChild(number);
+            ball.appendChild(document.createTextNode(n));
             ball.addEventListener('click', e => {
-                this.ballClick(ballId, e.target);
+                this.ballClick(n, e.target);
             });
             square.appendChild(ball);
         })
