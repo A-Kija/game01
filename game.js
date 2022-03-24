@@ -46,13 +46,20 @@ class Game {
             Math.random().toFixed(2),
             (Math.random() * 3 - 1.5).toFixed(2)
         ];
-        return `all 2s cubic-bezier(${a})`;
+        return `all 5s cubic-bezier(${a})`;
+    }
+
+    static hop(e) {
+        return {
+            top: (parseInt(e.style.top) - 100) + 'px',
+            transition: 'all 0.2s'
+        }
     }
 
     static fillWithNewBalls() {
         this.array25().forEach((n, i) => {
             const ball = document.createElement('div');
-            Object.assign(ball.style, {...this.numberToPlace(i, 0), backgroundImage: this.color(), transition: this.move() });
+            Object.assign(ball.style, {...this.numberToPlace(i, 0), backgroundImage: this.color() });
             ball.appendChild(document.createTextNode(n));
             ball.addEventListener('click', e => {
                 this.ballClick(n, e.target);
@@ -64,7 +71,8 @@ class Game {
     static ballClick(id, ball) {
         if (id == this.active) {
             this.active++;
-            Object.assign(ball.style, {...this.numberToPlace(id - 1, 600) });
+            Object.assign(ball.style, {...this.hop(ball) });
+            setInterval(() => Object.assign(ball.style, {...this.numberToPlace(id - 1, 600), transition: this.move() }), 200)
         }
     }
 }
