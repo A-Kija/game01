@@ -6,6 +6,7 @@ body {
     align-items: center;
     position: relative;
     margin: 0;
+    overflow: hidden;
 }
 
 * {
@@ -24,17 +25,17 @@ body {
     width: 70px;
     height: 70px;
     display: flex;
-    border: 1px dotted gray;
+    /* border: 1px dotted gray; */
     justify-content: center;
     align-items: center;
     border-radius: 50%;
     font-size: 30px;
     font-weight: bold;
-    color: black;
-    text-shadow: 1px 1px 1px gray;
+    color: white;
+    /* text-shadow: 1px 1px 1px gray; */
     cursor: pointer;
     position: absolute;
-    transition: all 1s ease-in-out;
+    transition: all 1s cubic-bezier(.45, 1.13, .17, 1.72);
 }
 
 .panel {

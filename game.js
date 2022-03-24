@@ -20,35 +20,51 @@ class Game {
     static numberToPlace(n, l, px = 100, pad = 15) {
         const top = parseInt(n / 5) * px + pad;
         const left = 4 * px - (n % 5) * px + l + pad;
-        return [top + 'px', left + 'px'];
+        return { top: top + 'px', left: left + 'px' };
     }
 
     static loadGame() {
         this.square = document.createElement('div');
         this.square.classList.add('square');
         document.querySelector('body').appendChild(this.square);
-        this.fillWithNewBalls(this.square);
+        this.fillWithNewBalls();
     }
 
-    static fillWithNewBalls(square) {
+    static color() {
+        const c = this.rand(10, 20);
+        const a = [];
+        for (let i = 0; i < c; i++) {
+            a.push('#' + Math.floor(Math.random() * 16777215).toString(16).padEnd(6, 0));
+        }
+        return `linear-gradient(${this.rand(0, 180)}deg, ${a})`;
+    }
+
+    static move() {
+        const a = [
+            Math.random().toFixed(2),
+            (Math.random() * 3 - 1.5).toFixed(2),
+            Math.random().toFixed(2),
+            (Math.random() * 3 - 1.5).toFixed(2)
+        ];
+        return `all 2s cubic-bezier(${a})`;
+    }
+
+    static fillWithNewBalls() {
         this.array25().forEach((n, i) => {
             const ball = document.createElement('div');
-            ball.style.top = this.numberToPlace(i, 0)[0];
-            ball.style.left = this.numberToPlace(i, 0)[1];
-            ball.style.background = '#' + Math.floor(Math.random() * 16777215).toString(16);
+            Object.assign(ball.style, {...this.numberToPlace(i, 0), backgroundImage: this.color(), transition: this.move() });
             ball.appendChild(document.createTextNode(n));
             ball.addEventListener('click', e => {
                 this.ballClick(n, e.target);
             });
-            square.appendChild(ball);
+            this.square.appendChild(ball);
         })
     }
 
     static ballClick(id, ball) {
         if (id == this.active) {
             this.active++;
-            ball.style.top = this.numberToPlace(id - 1, 600)[0]
-            ball.style.left = this.numberToPlace(id - 1, 600)[1];
+            Object.assign(ball.style, {...this.numberToPlace(id - 1, 600) });
         }
     }
 }
