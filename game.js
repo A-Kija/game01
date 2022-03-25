@@ -36,7 +36,7 @@ class Game {
         for (let i = 0; i < c; i++) {
             a.push('#' + Math.floor(Math.random() * 16777215).toString(16).padEnd(6, 0));
         }
-        return `linear-gradient(${this.rand(0, 180)}deg, ${a})`;
+        return { backgroundImage: `linear-gradient(${this.rand(0, 180)}deg, ${a})` };
     }
 
     static move() {
@@ -46,7 +46,7 @@ class Game {
             Math.random().toFixed(2),
             (Math.random() * 3 - 1.5).toFixed(2)
         ];
-        return `all 5s cubic-bezier(${a})`;
+        return { transition: `all 5s cubic-bezier(${a})` };
     }
 
     static hop(e) {
@@ -59,7 +59,7 @@ class Game {
     static fillWithNewBalls() {
         this.array25().forEach((n, i) => {
             const ball = document.createElement('div');
-            Object.assign(ball.style, {...this.numberToPlace(i, 0), backgroundImage: this.color() });
+            Object.assign(ball.style, {...this.numberToPlace(i, 0), ...this.color() });
             ball.appendChild(document.createTextNode(n));
             ball.addEventListener('click', e => {
                 this.ballClick(n, e.target);
@@ -72,7 +72,7 @@ class Game {
         if (id == this.active) {
             this.active++;
             Object.assign(ball.style, {...this.hop(ball) });
-            setInterval(() => Object.assign(ball.style, {...this.numberToPlace(id - 1, 600), transition: this.move() }), 200)
+            setInterval(() => Object.assign(ball.style, {...this.numberToPlace(id - 1, 600), ...this.move() }), 200)
         }
     }
 }
