@@ -2,11 +2,12 @@ body {
     width: 100vw;
     height: 100vh;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     position: relative;
     margin: 0;
     overflow: hidden;
+    flex-direction: column;
 }
 
 * {
@@ -21,7 +22,17 @@ body {
     position: relative;
 }
 
-.square div {
+.indicator {
+    background: red;
+    width: calc(100% + 2px);
+    height: 15px;
+    display: flex;
+    position: absolute;
+    left: -1px;
+    top: -16px;
+}
+
+.square .ball {
     width: 70px;
     height: 70px;
     display: flex;
